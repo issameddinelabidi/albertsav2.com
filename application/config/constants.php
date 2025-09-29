@@ -6,11 +6,11 @@ defined('WS_URL') or define('WS_URL', 'https://api.albertsav.com');
 defined('JWT_KEY') or define('JWT_KEY', getenv('JWT_KEY'));
 
 //STRIPE TEST
-// defined('STRIPE_PK') or define('STRIPE_PK', 'pk_test_51NEglfJdLRveMDLtpslWFykFG51ndhXsffn321PCzbd2IJSxgoAqlwRcRrtE1Fa3FSHZBvnvgsoqej18jHMpPftZ00ch8MvudQ');
-// defined('STRIPE_SK') or define('STRIPE_SK', 'sk_test_51NEglfJdLRveMDLtvljonhouBEEYxiqWJJ8wLXjUHNgtQaVZFVi670CZZpkk1NTGsPREAlwK0SR4ReS2aMoDkf0n003prHd8ZU');
+// defined('STRIPE_PK') or define('STRIPE_PK', getenv('STRIPE_PK'));
+// defined('STRIPE_SK') or define('STRIPE_SK', getenv('STRIPE_SK')));
 
-// defined('WHSEC') or define('WHSEC', 'whsec_R9boa3zVLZyz0dpmCvY2xQ8U76ODsPeL');
-// defined('WHSECUK') or define('WHSECUK', 'whsec_R9boa3zVLZyz0dpmCvY2xQ8U76ODsPeL');
+// defined('WHSEC') or define('WHSEC', getenv('WHSEC'));
+// defined('WHSECUK') or define('WHSECUK', getenv('WHSECUK'));
 
 //Order : Guide, Chat, Premium
 // defined('BASE_PROD_IDS') or define('BASE_PROD_IDS', ['prod_ORFe4xUNpMWhcq', 'prod_ORFdnwz0KJsHxp', 'prod_ORFdYffZzm63Rz']);
