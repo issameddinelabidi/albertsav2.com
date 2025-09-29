@@ -1,0 +1,42 @@
+# Ignorer les dépendances PHP
+/vendor/
+composer.lock
+
+# Ignorer les fichiers temporaires et caches
+/application/cache/
+/application/logs/
+*.log
+
+# Ignorer les fichiers système
+.DS_Store
+Thumbs.db
+
+# Ignorer les fichiers d'environnement
+.env
+.env.local
+
+# Ignorer les fichiers IDE
+.idea/
+.vscode/
+*.swp
+
+# Ignorer les fichiers de build front
+/node_modules/
+/dist/
+npm-debug.log
+
+# Ignorer les assets volumineux et sources
+assets/screens/
+assets/videos/
+assets/mockups/
+assets/media/
+assets/img/
+
+/invoices/
+
+# Ignorer les logs de test volumineux
+appup_test_logs/
+
+# Ignorer les fichiers de sauvegarde et temporaires
+*.bak
+*.tmp

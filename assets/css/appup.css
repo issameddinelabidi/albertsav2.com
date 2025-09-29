@@ -1,0 +1,102 @@
+@keyframes highlight {
+    0% {
+        background: #6dd677;
+    }
+    100% {
+        background: none;
+    }
+}
+
+.highlight {
+    animation: highlight 1s;
+}
+
+#floating_post_it {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.avatar_preview {
+    width: 60px;
+    height: 60px;
+    background-color: #ec366e;
+    background-position: center center;
+    background-size: 80%;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    border: 2px solid white;
+    /* padding: 30px; */
+    background-origin: padding-box;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* These styles are applied by default.
+   They will also override the hover
+   style for all stars to the right
+   of the currently hovered star. */
+.rate {
+    color: rgb(159, 204, 218);
+}
+
+.star_rate_selected {
+    color: #d9c93f;
+    text-shadow: #d9c93f 0 0 20px;
+}
+
+/* Miscellaneous styles. */
+.rate i {
+    cursor: pointer;
+    font-style: normal;
+}
+
+.rate {
+    font-size: 38px;
+}
+
+.counter-wrapper .counter.counter-lg {
+    font-size: 1.9rem;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    color: #3f78e0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.card-body p a {
+    color: #098de6 !important;
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+.blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+
+#up_to_date_modal, #promo_modal {
+    background: rgba(0, 0, 0, 0.55);
+}
+
