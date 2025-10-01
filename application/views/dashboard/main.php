@@ -537,13 +537,23 @@ if (!empty($user['channel_manager_used'])) {
 
 
                                     ?>
-                                        <td><a href="<?= site_url('annonce/' . $annonce['unique_id']); ?>" class="btn btn-dark"><i class="fa fa-chevron-right"></i></a></td>
+                                        <td>
+                                            <a href="<?= site_url('annonce/' . $annonce['unique_id']); ?>" class="btn btn-dark me-1"><i class="fa fa-chevron-right"></i></a>
+                                            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#duplicateModal<?= $annonce['id']; ?>" title="Dupliquer l'annonce">
+                                                <i class="fa fa-copy"></i>
+                                            </button>
+                                        </td>
                                     <?php
                                     } else {
                                     ?>
                                         <!-- <td></td>
                                         <td></td> -->
-                                        <td><a href="<?= site_url('annonce/' . $annonce['unique_id']); ?>" class="btn btn-dark"><i class="fa fa-chevron-right"></i></a></td>
+                                        <td>
+                                            <a href="<?= site_url('annonce/' . $annonce['unique_id']); ?>" class="btn btn-dark me-1"><i class="fa fa-chevron-right"></i></a>
+                                            <button type="button" class="btn btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#duplicateModal<?= $annonce['id']; ?>" title="Dupliquer l'annonce">
+                                                <i class="fa fa-copy"></i>
+                                            </button>
+                                        </td>
                                     <?php
                                     }
                                     ?>
@@ -602,3 +612,43 @@ if (!empty($user['channel_manager_used'])) {
         </div>
     </div>
 </section>
+
+<?php
+// Ajouter les modales de duplication pour chaque annonce
+if (!empty($annonces_list)) {
+    foreach ($annonces_list as $annonce) {
+        if (empty($annonce['deleted'])) {
+?>
+            <!-- Modal de duplication pour l'annonce <?= $annonce['id']; ?> -->
+            <div class="modal fade" id="duplicateModal<?= $annonce['id']; ?>" tabindex="-1" aria-labelledby="duplicateModalLabel<?= $annonce['id']; ?>" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="duplicateModalLabel<?= $annonce['id']; ?>">Dupliquer l'annonce</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="<?= site_url('actions/duplicateAnnonce'); ?>" method="POST">
+                            <input type="hidden" name="annonce_id" value="<?= $annonce['id']; ?>">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="new_name_<?= $annonce['id']; ?>" class="form-label">Nouveau titre :</label>
+                                    <input type="text" name="new_name" class="form-control" id="new_name_<?= $annonce['id']; ?>"
+                                        value="<?= htmlspecialchars($annonce['title']); ?> - Copie" required>
+                                    <div class="form-text">L'annonce originale : <strong><?= htmlspecialchars($annonce['title']); ?></strong></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-copy me-1"></i>Dupliquer l'annonce
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+<?php
+        }
+    }
+}
+?>

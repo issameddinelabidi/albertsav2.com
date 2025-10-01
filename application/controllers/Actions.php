@@ -389,7 +389,7 @@ class Actions extends CI_Controller
 
 
         if (!empty($this->data['user']['is_from_first_stripe_account'])) {
-            \Stripe\Stripe::setApiKey(getenv('STRIPE_SK'));
+            \Stripe\Stripe::setApiKey(getenv('STRIPE_SK_FIRST_ACCOUNT'));
         } else {
             \Stripe\Stripe::setApiKey(STRIPE_SK);
         }
@@ -1509,7 +1509,7 @@ class Actions extends CI_Controller
     public function exportInvoices()
     {
         // Set your Stripe API key
-        \Stripe\Stripe::setApiKey(getenv('STRIPE_SK'));
+        \Stripe\Stripe::setApiKey('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');
 
         // $stripe = new StripeClient(STRIPE_SK);
 
@@ -1822,7 +1822,7 @@ class Actions extends CI_Controller
     public function exportUsers()
     {
         // Clé API du compte A (ancien compte Stripe)
-        $stripeA = new \Stripe\StripeClient(getenv('STRIPE_SK'));
+        $stripeA = new \Stripe\StripeClient('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');
 
         $stripeB = new \Stripe\StripeClient(STRIPE_SK);
 
@@ -1971,7 +1971,7 @@ class Actions extends CI_Controller
 
 
         /*
-        \Stripe\Stripe::setApiKey(getenv('STRIPE_SK'));
+        \Stripe\Stripe::setApiKey('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');
 
         // Optionnel : pour ne suspendre que les abonnements actifs
         $filters = [
@@ -2146,6 +2146,65 @@ class Actions extends CI_Controller
 
                 $this->nx_client->create('Crons', $cron_data);
             }
+        }
+    }
+
+    public function duplicateAnnonce()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            redirect(site_url('dashboard'));
+            return;
+        }
+
+        $annonce_id = (int) $_POST['annonce_id'];
+        $new_name = trim($_POST['new_name']);
+
+        if (empty($new_name)) {
+            $this->session->set_flashdata('notif', [
+                'type' => 'error',
+                'value' => 'Le nouveau titre est requis'
+            ]);
+            redirect(site_url('dashboard'));
+            return;
+        }
+
+        try {
+            // Récupérer l'annonce originale
+            $get_annonce = $this->nx_client->getOne('Annonce', $annonce_id, []);
+
+            if (!empty($get_annonce)) {
+                // Préparer les données pour la duplication
+                $get_annonce['title'] = $new_name;
+                unset($get_annonce['id']);
+                unset($get_annonce['unique_id']);
+                unset($get_annonce['creation_date']);
+                unset($get_annonce['change_dt']);
+                unset($get_annonce['unique_reference']);
+                unset($get_annonce['channel_item_id']);
+                unset($get_annonce['platform_reference']);
+
+                // Créer la nouvelle annonce
+                $this->nx_client->create('Annonce', $get_annonce);
+
+                $this->session->set_flashdata('notif', [
+                    'type' => 'success',
+                    'value' => 'Annonce dupliquée avec succès'
+                ]);
+
+                redirect(site_url('dashboard'));
+            } else {
+                $this->session->set_flashdata('notif', [
+                    'type' => 'error',
+                    'value' => 'Impossible de dupliquer l\'annonce. Veuillez réessayer.'
+                ]);
+                redirect(site_url('dashboard'));
+            }
+        } catch (Exception $e) {
+            $this->session->set_flashdata('notif', [
+                'type' => 'error',
+                'value' => 'Erreur lors de la duplication : ' . $e->getMessage()
+            ]);
+            redirect(site_url('dashboard'));
         }
     }
 }
